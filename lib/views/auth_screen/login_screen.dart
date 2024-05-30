@@ -1,5 +1,6 @@
 import 'package:smart_basket/consts/consts.dart';
 import 'package:smart_basket/consts/lists.dart';
+import 'package:smart_basket/controllers/auth_controller.dart';
 import 'package:smart_basket/views/auth_screen/signup_screen.dart';
 import 'package:smart_basket/views/home_screen/home.dart';
 import 'package:smart_basket/widgets_common/applogo_widgets.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controlle = Get.put(AuthController());
     return bgWidget(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
@@ -29,8 +31,18 @@ class LoginScreen extends StatelessWidget {
           10.heightBox,
           Column(
             children: [
-              customTextfield(hint: emailHint, title: email),
-              customTextfield(hint: passwordHint, title: password),
+              customTextfield(
+                hint: emailHint,
+                title: email,
+                isPass: false,
+                controller: controlle.emailController,
+              ),
+              customTextfield(
+                hint: passwordHint,
+                title: password,
+                isPass: true,
+                controller: controlle.passwordController,
+              ),
               Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -40,8 +52,13 @@ class LoginScreen extends StatelessWidget {
                   color: redColor,
                   title: login,
                   textColor: whiteColor,
-                  onPress: () {
-                    Get.to(() => const Home());
+                  onPress: () async {
+                    await controlle.loginMethod(context: context).then((value) {
+                      if (value != null) {
+                        VxToast.show(context, msg: loggedin);
+                        Get.offAll(() => const Home());
+                      }
+                    });
                   }).box.width(context.screenWidth - 50).make(),
               5.heightBox,
               createNewAccount.text.color(fontGrey).make(),

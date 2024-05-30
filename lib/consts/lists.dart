@@ -39,3 +39,6 @@ const iteamDatailsButtonList = [
   returnPolicy,
   supportPolicy
 ];
+
+const profileButtonsList = [orders, wishlist, message];
+const profileButtonsIcon = [icOrder, icOrder, icMessages];

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444928285386",
+    "project_id": "smartbasket-11255",
+    "storage_bucket": "smartbasket-11255.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444928285386:android:770aa7ebce5619c9da3233",
+        "android_client_info": {
+          "package_name": "com.example.emart_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEJbrQ46sPLolGqqXiP0nWDyYX02ERzcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

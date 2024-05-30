@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:smart_basket/consts/consts.dart';
+import 'package:smart_basket/consts/lists.dart';
+import 'package:smart_basket/controllers/auth_controller.dart';
+import 'package:smart_basket/views/auth_screen/login_screen.dart';
+import 'package:smart_basket/views/profile_screen/components/details_card.dart';
 import 'package:smart_basket/widgets_common/bg_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -11,21 +17,101 @@ class ProfileScreen extends StatelessWidget {
     return bgWidget(
       child: Scaffold(
         body: SafeArea(
-          child: Container(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Image.asset(
-                      imgProfile2,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ).box.roundedFull.clip(Clip.antiAlias).make(),
-                  ],
+          //  padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              //edit profile button
+              Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.edit,
+                  color: whiteColor,
                 ),
-              ],
-            ),
+              ).onTap(() {}),
+
+              //users details section
+              Row(
+                children: [
+                  Image.asset(imgProfile2, width: 80, fit: BoxFit.cover)
+                      .box
+                      .roundedFull
+                      .clip(Clip.antiAlias)
+                      .make(),
+                  10.widthBox,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "Dummy User".text.fontFamily(semibold).white.make(),
+                        "customer@example.com".text.white.make(),
+                      ],
+                    ),
+                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                        color: whiteColor,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await Get.put(AuthController()).signupMethod(context);
+                      Get.offAll(() => const LoginScreen());
+                    },
+                    child: logout.text.fontFamily(semibold).white.make(),
+                  ),
+                ],
+              ),
+              20.heightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  detailsCard(
+                      count: "00",
+                      title: "In your cart",
+                      width: context.screenWidth / 3.4),
+                  detailsCard(
+                      count: "30",
+                      title: "In your wishlist",
+                      width: context.screenWidth / 3.4),
+                  detailsCard(
+                      count: "50",
+                      title: "your order",
+                      width: context.screenWidth / 3.4),
+                ],
+              ),
+
+              //button section
+
+              ListView.separated(
+                shrinkWrap: true,
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    color: lightGrey,
+                  );
+                },
+                itemCount: profileButtonsList.length,
+                itemBuilder: (BuildContext, int index) {
+                  return ListTile(
+                    leading: Image.asset(profileButtonsIcon[index], width: 22),
+                    title: "${profileButtonsList[index]}"
+                        .text
+                        .fontFamily(bold)
+                        .color(darkFontGrey)
+                        .make(),
+                  );
+                },
+              )
+                  .box
+                  .white
+                  .rounded
+                  .shadowSm
+                  .margin(EdgeInsets.all(12))
+                  .padding(EdgeInsets.symmetric(horizontal: 16))
+                  .make()
+                  .box
+                  .color(redColor)
+                  .make()
+            ],
           ),
         ),
       ),
